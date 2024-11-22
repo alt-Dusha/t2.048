@@ -1,16 +1,8 @@
-﻿using System.Diagnostics.Eventing.Reader;
-using System.Security.Cryptography;
-using System.Text;
-using System.Windows;
-using System.Windows.Automation.Provider;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Threading;
 
 namespace t2._048
 {
@@ -116,16 +108,15 @@ namespace t2._048
             {
                 while (stackPanel.Children.Count > 1) // Пока есть минимум два элемента
                 {
+                    Thread.Sleep(150);
                     var lastChild = stackPanel.Children[stackPanel.Children.Count - 1] as TextBlock;
                     var secondLastChild = stackPanel.Children[stackPanel.Children.Count - 2] as TextBlock;
 
                     if (lastChild.Text == secondLastChild.Text)
                     {
-                        // Увеличиваем значение второго элемента
                         secondLastChild.Text = (int.Parse(secondLastChild.Text) * 2).ToString();
-
-                        // Удаляем последний элемент из StackPanel
                         stackPanel.Children.Remove(lastChild);
+
                     }
                     else
                     {
