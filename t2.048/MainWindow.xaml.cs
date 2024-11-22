@@ -20,15 +20,6 @@ namespace t2._048
     public partial class MainWindow : Window
     {
         int lastInt;
-        int c1 = 0;
-        int c2 = 0;
-        int c3 = 0;
-        int c4 = 0;
-        string[] nameInLine1 = new string[10];
-        string[] nameInLine2 = new string[10];
-        string[] nameInLine3 = new string[10];
-        string[] nameInLine4 = new string[10];
-
 
         public MainWindow()
         {
@@ -59,79 +50,14 @@ namespace t2._048
             }
         }
 
-        private string[] ArrayForLineAdd(string nameForCard, string nameStack)
-        {
-            if (nameStack == "stack1")
-            {
-                for (int i =0;  i < 9; i++)
-                {
-                    if (nameInLine1[i] == null || nameInLine1[i] == "")
-                    {
-                        nameInLine1[i] = nameForCard;
-                        nameInLine1[9] = i.ToString();
-                        return nameInLine1;
-                    }
-                }
-                return nameInLine1;
-            }
-            else if (nameStack == "stack2")
-            {
-                for (int i = 0; i < 9; i++)
-                {
-                    if (nameInLine2[i] == null || nameInLine2[i] == "")
-                    {
-                        nameInLine2[i] = nameForCard;
-                        nameInLine2[9] = i.ToString();
-                        return nameInLine2;
-                    }
-                }
-                return nameInLine2;
-            }
-            else if (nameStack == "stack3")
-            {
-                for (int i = 0; i < 9; i++)
-                {
-                    if (nameInLine3[i] == null || nameInLine3[i] == "")
-                    {
-                        nameInLine3[i] = nameForCard;
-                        nameInLine3[9] = i.ToString();
-                        return nameInLine3;
-                    }
-                }
-                return nameInLine3;
-            }
-            else
-            {
-                for (int i = 0; i < 9; i++)
-                {
-                    if (nameInLine4[i] == null || nameInLine4[i] == "")
-                    {
-                        nameInLine4[i] = nameForCard;
-                        nameInLine4[9] = i.ToString();
-                        return nameInLine4;
-                    }
-                }
-                return nameInLine4;
-            }
-        }
-
-
-
         private void stack1_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            string nameForCard;
             if (lastInt == 0)
             {
 
             }
             else if (sender is StackPanel stackPanel)
             {
-                //Формирование нового имени для Карты в столбце(записываются в массив)
-                if (stackPanel.Name == "stack1") { nameForCard = stackPanel.Name + c1; c1++; }
-                else if (stackPanel.Name == "stack2") { nameForCard = stackPanel.Name + c2; c2++; }
-                else if (stackPanel.Name == "stack3") { nameForCard = stackPanel.Name + c3; c3++; }
-                else { nameForCard = stackPanel.Name + c4; c4++; }
-                string stackPanelName = stackPanel.Name;
                 TextBlock t = new TextBlock
                 {
                     Background = GetColorForCard(lastInt),
@@ -141,7 +67,6 @@ namespace t2._048
                     Text = lastInt.ToString(),
                     TextAlignment = TextAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center,
-                    Name = nameForCard
                 };
                 lastInt = 0;
                 foreach (var child in stackPanel.Children)
@@ -161,58 +86,50 @@ namespace t2._048
                     }
                 }
                 stackPanel.Children.Add(t);
-                Minimized(ArrayForLineAdd(nameForCard, stackPanel.Name), stackPanel);
+                Minimized(stackPanel.Children.Count, stackPanel);
             }
         }
 
-        static void Minimized(string[] arrayName, StackPanel stack)
+        static void Minimized(int i, StackPanel stack)
         {
-            int elementCount = 0;
-            foreach (string name in arrayName)
+            for (int j = 0; j < i; j++)
             {
-                if (!string.IsNullOrEmpty(name))
-                    elementCount++;
-                else
-                    break;
-            }
-
-            for (int i = 0; i < stack.Children.Count; i++)
-            {
-                if (stack.Children[i] is FrameworkElement element)
+                if (stack.Children[j] is TextBlock element)
                 {
-                    if (i < elementCount - 1)
+                    if (j < i - 1)
                     {
-                        SumCards(arrayName, stack);
                         element.Height = 31.25;
                     }
-                    else if (i == elementCount - 1)
+                    else if (j == i - 1)
                     {
                         element.Height = 85;
                     }
                 }
             }
+            SumCards(stack);
         }
 
-        static void SumCards(string[] nameCards, StackPanel stack)
+        static void SumCards(StackPanel stackPanel)
         {
-            int elementCount = 0;
-            int lastCardIndex = Convert.ToInt32(nameCards[9]);
-            for (int i = lastCardIndex; i > 0; i--)
             {
-                if (nameCards[i] == nameCards[i - 1])
+                if (stackPanel.Children.Count < 2) return;
+                else
                 {
-                    nameCards[i - 1] = (Convert.ToInt32(nameCards[i]) * 2).ToString();
-                    nameCards[i] = "";
-                    nameCards[9] = (Convert.ToInt32(nameCards[9]) - 1).ToString();
+                    var lastChild = stackPanel.Children[stackPanel.Children.Count - 1] as TextBlock;
+                    var secondLastChild = stackPanel.Children[stackPanel.Children.Count - 2] as TextBlock;
+                    while (true)
+                    {
+                        if (lastChild.Text == secondLastChild.Text)
+                        {
+                            secondLastChild.Text = (int.Parse(secondLastChild.Text) * 2).ToString();
+                            stackPanel.Children.Remove(lastChild);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                 }
-            }
-            if (stack.Children.Count > 0)
-            {
-                if (stack.Children[stack.Children.Count - 2] is TextBlock textBlock)
-                {
-                    textBlock.Text = nameCards[9];
-                }
-                stack.Children.RemoveAt(stack.Children.Count - 1);
             }
         }
 
@@ -231,7 +148,8 @@ namespace t2._048
             {
                 return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2d318d"));
             }
-            else
+            //if (lastInt == 16)
+            else 
             {
                 return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#5e2c8a"));
             }
@@ -259,7 +177,6 @@ namespace t2._048
             {
                 return integers[3];
             }
-
         }
     }
 }
