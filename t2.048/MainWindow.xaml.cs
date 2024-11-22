@@ -111,23 +111,25 @@ namespace t2._048
 
         static void SumCards(StackPanel stackPanel)
         {
+            if (stackPanel.Children.Count < 2) return;
+            else
             {
-                if (stackPanel.Children.Count < 2) return;
-                else
+                while (stackPanel.Children.Count > 1) // Пока есть минимум два элемента
                 {
                     var lastChild = stackPanel.Children[stackPanel.Children.Count - 1] as TextBlock;
                     var secondLastChild = stackPanel.Children[stackPanel.Children.Count - 2] as TextBlock;
-                    while (true)
+
+                    if (lastChild.Text == secondLastChild.Text)
                     {
-                        if (lastChild.Text == secondLastChild.Text)
-                        {
-                            secondLastChild.Text = (int.Parse(secondLastChild.Text) * 2).ToString();
-                            stackPanel.Children.Remove(lastChild);
-                        }
-                        else
-                        {
-                            break;
-                        }
+                        // Увеличиваем значение второго элемента
+                        secondLastChild.Text = (int.Parse(secondLastChild.Text) * 2).ToString();
+
+                        // Удаляем последний элемент из StackPanel
+                        stackPanel.Children.Remove(lastChild);
+                    }
+                    else
+                    {
+                        break; // Прерываем, если элементы не равны
                     }
                 }
             }
