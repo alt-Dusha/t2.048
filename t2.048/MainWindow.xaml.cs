@@ -202,11 +202,17 @@ namespace t2._048
                 if (nameCards[i] == nameCards[i - 1])
                 {
                     nameCards[i - 1] = (Convert.ToInt32(nameCards[i]) * 2).ToString();
+                    nameCards[i] = "";
+                    nameCards[9] = (Convert.ToInt32(nameCards[9]) - 1).ToString();
                 }
             }
-            if (stack.Children[stack.Children.Count] is FrameworkElement element)
+            if (stack.Children.Count > 0)
             {
-                element.
+                if (stack.Children[stack.Children.Count - 2] is TextBlock textBlock)
+                {
+                    textBlock.Text = nameCards[9];
+                }
+                stack.Children.RemoveAt(stack.Children.Count - 1);
             }
         }
 
