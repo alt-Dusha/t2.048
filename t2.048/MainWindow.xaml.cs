@@ -204,8 +204,10 @@ namespace t2._048
                     nameCards[i - 1] = (Convert.ToInt32(nameCards[i]) * 2).ToString();
                 }
             }
-            //stack.Children[stack.Children.Count];
-
+            if (stack.Children[stack.Children.Count] is FrameworkElement element)
+            {
+                element.
+            }
         }
 
         //Полностью лаконичное и закоченное пространство, если и дорабатывать то в другой жизни
