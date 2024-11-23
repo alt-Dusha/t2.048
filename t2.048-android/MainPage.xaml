@@ -22,6 +22,11 @@
                                TextColor="#00befd"
                                FontSize="12"
                                HorizontalOptions="Center"/>
+                        <Label x:Name="timerLabel"
+                                Grid.Column="2"
+                                TextColor="#00befd"
+                                FontSize="12"
+                                HorizontalOptions="Center"/>
                     </Grid>
                 </Border>
 

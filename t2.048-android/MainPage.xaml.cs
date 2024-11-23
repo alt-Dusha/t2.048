@@ -8,10 +8,19 @@ namespace t2._048_android
 {
     public partial class MainPage : ContentPage
     {
+        private int lastInt;
+        private static int Score;
+        private static int cash_score;
+        private Button? activeButton;
         private readonly int[] integers = { 2, 4, 8, 16 };
         private readonly Random random = new Random();
         private List<VerticalStackLayout> columns;
         private VerticalStackLayout? selectedColumn;
+        private const int MAX_CARDS_PER_COLUMN = 9;
+
+        private const int GAME_TIME_SECONDS = 300; // 5 minutes
+        private IDispatcherTimer gameTimer;
+        private int remainingSeconds;
 
         public MainPage()
         {
@@ -38,71 +47,109 @@ namespace t2._048_android
                 column.GestureRecognizers.Add(collumTapGesture);
             }
 
+            InitializeTimer();
+            StartNewGame();
+        }
+
+        private void InitializeTimer()
+        {
+            gameTimer = Application.Current.Dispatcher.CreateTimer();
+            gameTimer.Interval = TimeSpan.FromSeconds(1);
+            gameTimer.Tick += Timer_Tick;
+        }
+
+        private void StartNewGame()
+        {
+            remainingSeconds = GAME_TIME_SECONDS;
+            UpdateTimerDisplay();
+            gameTimer.Start();
+
+            // Reset other game elements
+            Score = 0;
+            score.Text = "0";
             UpdateInitialButtons();
+        }
+
+        private async void Timer_Tick(object sender, EventArgs e)
+        {
+            remainingSeconds--;
+            UpdateTimerDisplay();
+
+            if (remainingSeconds <= 0)
+            {
+                gameTimer.Stop();
+                await DisplayAlert("Время вышло!", $"Вы не успели собрать 2048.\nВаш счет: {Score}", "Новая игра");
+                ResetGame();
+            }
+        }
+
+        private void UpdateTimerDisplay()
+        {
+            var minutes = remainingSeconds / 60;
+            var seconds = remainingSeconds % 60;
+            timerLabel.Text = $"{minutes:00}:{seconds:00}";
+        }
+
+        private int RandomIndex()
+        {
+            int t = random.Next(0, 101); // 0-100
+
+            if (t > 60)
+                return integers[0];      // 2
+            else if (t > 30)
+                return integers[1];      // 4
+            else if (t > 10)
+                return integers[2];      // 8
+            else
+                return integers[3];      // 16
         }
 
         private void UpdateInitialButtons()
         {
             FirstButton.Text = RandomIndex().ToString();
             FirstButton.BackgroundColor = GetColorForCard(int.Parse(FirstButton.Text));
-            FirstButton.CornerRadius = 5;
 
             SecondButton.Text = RandomIndex().ToString();
             SecondButton.BackgroundColor = GetColorForCard(int.Parse(SecondButton.Text));
-            SecondButton.CornerRadius = 5;
         }
 
-        private int RandomIndex()
+        private async Task MergeCards(VerticalStackLayout stack)
         {
-            int t = random.Next(0, 101); // 0-100
-            
-            if (t > 60)
-                return integers[0];
-            else if (t > 30)
-                return integers[1];
-            else if (t > 10)
-                return integers[2];
-            else
-                return integers[3];
-        }
+            if (stack.Children.Count < 2) return;
 
-        private void MergeCards(VerticalStackLayout stackLayout)
-        {
-            while (stackLayout.Children.Count > 1)
+            while (stack.Children.Count > 1)
             {
-                var lastChild = stackLayout.Children[^1] as Border;
-                var secondLastChild = stackLayout.Children[^2] as Border;
+                var lastCard = stack.Children[^1] as Border;
+                var prevCard = stack.Children[^2] as Border;
 
-                if (lastChild?.Content is Label lastLabel &&
-                    secondLastChild?.Content is Label secondLastLabel &&
-                    lastLabel.Text == secondLastLabel.Text)
+                if (lastCard?.Content is Label lastLabel && 
+                    prevCard?.Content is Label prevLabel && 
+                    lastLabel.Text == prevLabel.Text)
                 {
-                    // Double the value
-                    int newValue = int.Parse(secondLastLabel.Text) * 2;
-                    secondLastLabel.Text = newValue.ToString();
-
-                    // Update styling
-                    secondLastChild.BackgroundColor = GetColorForCard(newValue);
-                    secondLastChild.HeightRequest = 85;
-                    secondLastChild.StrokeShape = new RoundRectangle 
-                    { 
-                        CornerRadius = new CornerRadius(5) 
-                    };
-
-                    // Remove merged card
-                    stackLayout.Children.Remove(lastChild);
+                    int newValue = int.Parse(prevLabel.Text) * 2;
+                    prevLabel.Text = newValue.ToString();
+                    prevCard.BackgroundColor = GetColorForCard(newValue);
+                    
+                    stack.Children.Remove(lastCard);
+                    
+                    // Проверка победы
+                    if (newValue == 2048)
+                    {
+                        gameTimer.Stop();
+                        await DisplayAlert("Поздравляем!", $"Вы собрали 2048!\nВаш счет: {Score}", "Новая игра");
+                        ResetGame();
+                        return;
+                    }
                 }
-                else
-                {
-                    break;
-                }
+                else break;
             }
         }
 
         private Color GetColorForCard(int value)
         {
-            string[] colors = { "#6FEEB0", "#A3D88B", "#FF6B6B", "#FF3E5B", "#EAD2AC", 
-                               "#9B59B6", "#B9FBC0", "#76E6D5", "#00A8E1", "#5C6BC0", "#F27D4C" };
+            string[] colors = { "#2350FC", "#91FC23", "#6C23FC", "#FCF023", 
+                               "#6D4FA7", "#FC4623", "#00BFFF", "#FCC223", 
+                               "#4F63A7", "#50727D", "#0000FF" };
             
             int index = 0;
             for (int j = 2; j <= 2024; j *= 2)
@@ -111,7 +158,7 @@ namespace t2._048_android
                     return Color.FromArgb(colors[index]);
                 index++;
             }
-            return Colors.Gray;
+            return Color.FromArgb(colors[^1]);
         }
 
         private void ColumnTapped(object? sender, TappedEventArgs e)
@@ -120,7 +167,7 @@ namespace t2._048_android
             {
                 var parentBorder = tappedColumn.Parent as Border;
 
-                // Reset previous selection
+                // Перезапускаем прошлый столбец
                 if (selectedColumn?.Parent is Border previousBorder)
                 {
                     previousBorder.BackgroundColor = Colors.Transparent;
@@ -128,7 +175,7 @@ namespace t2._048_android
 
                 selectedColumn = tappedColumn;
 
-                // Highlight new selection
+                // Подсвечиваем выбранный столбец
                 if (parentBorder != null)
                 {
                     parentBorder.BackgroundColor = Color.FromArgb("#303030");
@@ -136,42 +183,122 @@ namespace t2._048_android
             }
         }
 
-         private void ButtonClicked(object sender, EventArgs e)
+        private void ClearColumnSelection()
+        {
+            if (selectedColumn?.Parent is Border previousBorder)
+            {
+                previousBorder.BackgroundColor = Colors.Transparent;
+            }
+            selectedColumn = null;
+        }
+
+        private async void ButtonClicked(object sender, EventArgs e)
         {
             if (selectedColumn == null)
             {
-                DisplayAlert("Внимание", "Выберите столбец для размещения карточки", "OK");
+                await DisplayAlert("Внимание", "Выберите столбец для размещения карточки", "OK");
+                return;
+            }
+
+            if (columns.All(col => col.Children.Count >= MAX_CARDS_PER_COLUMN))
+            {
+                await DisplayAlert("Игра окончена", "Все столбцы заполнены", "OK");
+                ResetGame();
+                return;
+            }
+            else if (selectedColumn.Children.Count >= MAX_CARDS_PER_COLUMN)
+            {
+                await DisplayAlert("Внимание", "Этот столбец заполнен. Выберите другой столбец", "OK");
+                ClearColumnSelection();
                 return;
             }
             
+
             if (sender is Button button)
             {
+                activeButton = button;
+                cash_score = int.Parse(button.Text);
+                lastInt = cash_score;
+
+                // Анимация кнопки
+                button.TranslationY = -20;
+                await button.TranslateTo(button.TranslationX, 0, 200, Easing.CubicOut);
+
                 var border = new Border
                 {
                     Content = new Label 
                     { 
-                        Text = button.Text,
+                        Text = lastInt.ToString(),
                         HorizontalOptions = LayoutOptions.Center,
                         VerticalOptions = LayoutOptions.Center,
-                        TextColor = Colors.White
+                        TextColor = Colors.White,
+                        FontSize = 20
                     },
-                    BackgroundColor = GetColorForCard(int.Parse(button.Text)),
+                    BackgroundColor = GetColorForCard(lastInt),
                     HeightRequest = 85,
-                    WidthRequest = 55,
-                    Margin = new Thickness(2),
-                    StrokeShape = new RoundRectangle 
-                    { 
-                        CornerRadius = new CornerRadius(5)
-                    }
+                    WidthRequest = 57,
+                    StrokeShape = new RoundRectangle { CornerRadius = 5 },
+                    Stroke = Colors.Black,
+                    StrokeThickness = 1
                 };
-        
-                // Добавляем только в выбранный столбец
+
                 selectedColumn.Children.Add(border);
-                MergeCards(selectedColumn);
-        
-                // Обновляем кнопку
+                
+                // Обновление очков
+                Score += cash_score;
+                score.Text = Score.ToString();
+
+                // Минимизация и слияние карточек
+                await MergeCards(selectedColumn);
+                MinimizeCards(selectedColumn);
+
+                // Обновление кнопки
                 button.Text = RandomIndex().ToString();
                 button.BackgroundColor = GetColorForCard(int.Parse(button.Text));
+            }
+        }
+
+        private void MinimizeCards(VerticalStackLayout stack)
+        {
+            int count = stack.Children.Count;
+            
+            // Если карта одна - оставляем полный размер
+            if (count == 1)
+            {
+                if (stack.Children[0] is Border border)
+                {
+                    border.HeightRequest = 85;
+                    border.Margin = new Thickness(0);
+                    border.StrokeShape = new RoundRectangle { CornerRadius = 5 };
+                }
+                return;
+            }
+
+            // Обрабатываем множество карт
+            for (int i = 0; i < count; i++)
+            {
+                if (stack.Children[i] is Border border)
+                {
+                    // Отступы
+                    border.Margin = i == 0 
+                        ? new Thickness(0) 
+                        : new Thickness(0, -4, 0, 0);
+
+                    // Размеры и скругления
+                    if (i < count - 1)
+                    {
+                        border.HeightRequest = 31.25;
+                        border.StrokeShape = new RoundRectangle 
+                        { 
+                            CornerRadius = new CornerRadius(5, 5, 0, 0) 
+                        };
+                    }
+                    else
+                    {
+                        border.HeightRequest = 85;
+                        border.StrokeShape = new RoundRectangle { CornerRadius = 5 };
+                    }
+                }
             }
         }
 
@@ -183,6 +310,18 @@ namespace t2._048_android
         private void SecondButton_Clicked(object sender, EventArgs e)
         {
             ButtonClicked(e, new TappedEventArgs(SecondButton));
+        }
+
+        private void ResetGame()
+        {
+            gameTimer.Stop();
+            StartNewGame();
+
+            foreach (var column in columns)
+            {
+                column.Children.Clear();
+            }
+            ClearColumnSelection();
         }
     }
 
