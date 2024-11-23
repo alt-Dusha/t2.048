@@ -200,6 +200,9 @@ namespace t2._048
                 }
             }
         }
+
+
+
         //Полностью лаконичное и закоченное пространство, если и дорабатывать то в другой жизни
         static SolidColorBrush GetColorForCard(int i)
         {
@@ -242,6 +245,5 @@ namespace t2._048
                 return integers[3];
             }
         }
-
     }
 }
