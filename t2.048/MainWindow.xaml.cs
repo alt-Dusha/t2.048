@@ -6,6 +6,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using System.Timers;
+using System.Runtime.CompilerServices;
 
 namespace t2._048
 {
@@ -235,6 +236,8 @@ namespace t2._048
         {
             Gift gift = new Gift();
             gift.Show();
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Close();
         }
 
         private void TimerCheck(object sender, ElapsedEventArgs e)
