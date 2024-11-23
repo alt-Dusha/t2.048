@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:t2._048"
         mc:Ignorable="d"
+        WindowStyle="None"
+        Background="#141414"
         Title="t2.048" Width="300" Height="500" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -17,25 +19,26 @@
             <RowDefinition Height="25*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+        <Border Grid.Row="1" Grid.Column="1" BorderBrush="#ff3495" BorderThickness="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="48*"/>
                     <RowDefinition Height="647*"/>
-                    <RowDefinition Height="214*"/>
+                    <RowDefinition Height="195*"/>
                 </Grid.RowDefinitions>
-                <Border Margin="4,4,4,2" Background="DarkGray"
-                        BorderBrush="Black" BorderThickness="1">
+                <Border Margin="4,4,4,2" Background="#141414"
+                        BorderBrush="#00befd" BorderThickness="1">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="1" x:Name="score" Foreground="#00befd" FontSize="12" HorizontalAlignment="Center"/>
                     </Grid>
                     <!--Поле для прогресса лиги, количества жизней, таймера-->
                 </Border>
-                <Grid Grid.Row="1" Margin="4,2,4,2" Background="DarkGray">
+                <Grid Grid.Row="1" Margin="4,2,4,2" Background="#141414">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -43,7 +46,11 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <!--4 ряда с картами-->
-                    <StackPanel Name="stack1" Orientation="Vertical" MouseLeftButtonDown="stack1_MouseDown">
+                    <Border Grid.Column="0" Width="55"  Height="85" BorderBrush="#3e383a" BorderThickness="2" CornerRadius="5" VerticalAlignment="Top"/>
+                    <Border Grid.Column="1" Width="55" Height="85" BorderBrush="#3e383a" BorderThickness="2" CornerRadius="5" VerticalAlignment="Top"/>
+                    <Border Grid.Column="2" Width="55" Height="85" BorderBrush="#3e383a" BorderThickness="2" CornerRadius="5" VerticalAlignment="Top"/>
+                    <Border Grid.Column="3" Width="55" Height="85" BorderBrush="#3e383a" BorderThickness="2" CornerRadius="5" VerticalAlignment="Top"/>
+                    <StackPanel Name="stack1" MouseLeftButtonDown="stack1_MouseDown">
                         <TextBlock Height="310" Name="h1"/>
                     </StackPanel>
                     <StackPanel Name="stack2" Grid.Column="1" MouseLeftButtonDown="stack1_MouseDown">
@@ -56,31 +63,27 @@
                         <TextBlock Height="310" Name="h4"/>
                     </StackPanel>
                 </Grid>
-                <Grid Grid.Row="3" Margin="4,2,4,4" Background="DarkGray">
+                <Grid Grid.Row="3" Margin="4,2,4,4">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Grid>
-                        <!--Просто для вида-->
-                        <Border Background="#FFDDDDDD" Margin="4, 4, 2, 4" BorderBrush="Black" BorderThickness="1"/>
-                        <Border Background="#FFDDDDDD" Margin="16, 4, 2, 4" BorderBrush="Black" BorderThickness="1"/>
-                        <Border Background="#FFDDDDDD" Margin="28, 4, 2, 4" BorderBrush="Black" BorderThickness="1"/>
-                        <Border Background="#FFDDDDDD" Margin="40, 4, 2, 4" BorderBrush="Black" BorderThickness="1"/>
-                        <Border Background="#FFDDDDDD" Margin="52, 4, 2, 4" BorderBrush="Black" BorderThickness="1"/>
-                        <Border Background="#FFDDDDDD" Margin="64, 4, 2, 4" BorderBrush="Black" BorderThickness="1"/>
-                    </Grid>
-                    <Button Grid.Column="1" Margin="2,4,2,4" Click="Button_Click" Name="FirstButton" FontSize="20"
-                            VerticalContentAlignment="Top">
+                    <Border Grid.Column="0" Width="55" Margin="57,10,15,0" Height="82" Background="#303030" CornerRadius="5" VerticalAlignment="Top"/>
+                    <Border Grid.Column="0" Width="55" Margin="62,0,10,0" Height="82" Background="#3e383a" CornerRadius="5" VerticalAlignment="Center"/>
+                    <Button Margin="2,4" Width="56" Foreground="White" BorderThickness="0" Click="Button_Click" Name="FirstButton" FontSize="20"
+                            HorizontalAlignment="Right"
+                            VerticalContentAlignment="Center">
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="8"/>
                             </Style>
                         </Button.Resources>
                     </Button>
-                    <Button Grid.Column="2" Margin="2,4,4,4" Click="Button_Click" Name="SecondButton" FontSize="20"
-                            VerticalContentAlignment="Top">
+                    <Border Grid.Column="1" Width="55" Margin="15,10,58,0" Height="82" Background="#303030" CornerRadius="5" VerticalAlignment="Top"/>
+                    <Border Grid.Column="1" Width="55" Margin="11,0,62,0" Height="82" Background="#3e383a" CornerRadius="5" VerticalAlignment="Center"/>
+                    <Button Grid.Column="1" Margin="2,4" Foreground="White" BorderThickness="0" Width="56" Click="Button_Click" Name="SecondButton" FontSize="20"
+                            HorizontalAlignment="Left"
+                            VerticalContentAlignment="Center">
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="8"/>
