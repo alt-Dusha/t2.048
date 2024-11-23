@@ -9,4 +9,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Life\heart.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Life\heart.png" />
+  </ItemGroup>
+
 </Project>

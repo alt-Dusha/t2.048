@@ -75,7 +75,7 @@
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0" Width="55" Margin="57,10,15,0" Height="82" Background="#303030" CornerRadius="5" VerticalAlignment="Top"/>
                     <Border Grid.Column="0" Width="55" Margin="62,0,10,0" Height="82" Background="#3e383a" CornerRadius="5" VerticalAlignment="Center"/>
-                    <Button Margin="2,4" Width="56" Foreground="White" BorderThickness="0" Click="Button_Click" Name="FirstButton" FontSize="20"
+                    <Button Margin="2,4" Width="54" Foreground="White" BorderThickness="0" Click="Button_Click" Name="FirstButton" FontSize="20"
                             HorizontalAlignment="Right"
                             VerticalContentAlignment="Center">
                         <Button.Resources>
