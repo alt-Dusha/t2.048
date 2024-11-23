@@ -147,7 +147,7 @@ namespace t2._048_android
 
         private Color GetColorForCard(int value)
         {
-            string[] colors = { "#2350FC", "#91FC23", "#6C23FC", "#FCF023", 
+            string[] colors = { "#2350FC", "#91FC23", "#6C23FC", "#EADD00", 
                                "#6D4FA7", "#FC4623", "#00BFFF", "#FCC223", 
                                "#4F63A7", "#50727D", "#0000FF" };
             
