@@ -99,7 +99,7 @@ namespace t2._048
             }
             else if (sender is StackPanel stackPanel)
             {
-                if (stackPanel.Children.Count == 11)
+                if (stackPanel.Children.Count == 10)
                 {
                     if (health > 1)
                     {
@@ -212,7 +212,10 @@ namespace t2._048
                 {
                     // Удваиваем значение текста во втором последнем элементе
                     secondLastTextBlock.Text = (int.Parse(secondLastTextBlock.Text) * 2).ToString();
-
+                    if (secondLastTextBlock.Text == "32")
+                    {
+                        OpenGift();
+                    }
                     // Применяем новые параметры к второму последнему элементу
                     secondLastChild.Background = GetColorForCard(int.Parse(secondLastTextBlock.Text));
                     secondLastChild.Height = 85; // Устанавливаем высоту на 85 после слияния
@@ -226,6 +229,12 @@ namespace t2._048
                     break; // Прерываем, если элементы не равны
                 }
             }
+        }
+
+        static void OpenGift()
+        {
+            Gift gift = new Gift();
+            gift.Show();
         }
 
         private void TimerCheck(object sender, ElapsedEventArgs e)
