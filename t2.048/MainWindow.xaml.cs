@@ -16,7 +16,7 @@ namespace t2._048
         static int cash_score;
         Button b;
         System.Timers.Timer timer;
-        double timeC = 3; // Переменная для отслеживания времени
+        double timeC = 360; // Переменная для отслеживания времени
         int health = 3;
         DoubleAnimation animka = new DoubleAnimation()
         {
@@ -101,7 +101,23 @@ namespace t2._048
             {
                 if (stackPanel.Children.Count == 11)
                 {
-                    // Можно добавить какую-то логику
+                    if (health > 1)
+                    {
+                        health -= 1;
+                        Dispatcher.Invoke(() =>
+                        {
+                            stackHeart.Children.RemoveAt(health);
+                        });
+
+                        timer = new System.Timers.Timer(1000); // Создаём таймер, который срабатывает каждую секунду
+                        timer.Elapsed += TimerCheck;
+                        timeC = 360;
+                        timer.Start();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Вы проиграли");
+                    }
                 }
                 else
                 {
@@ -226,7 +242,7 @@ namespace t2._048
                 if (timeC == 0)
                 {
                     timer.Stop(); // Останавливаем таймер
-                    if (health >  1)
+                    if (health > 1)
                     {
                         health -= 1;
                         Dispatcher.Invoke(() =>
@@ -236,7 +252,7 @@ namespace t2._048
 
                         timer = new System.Timers.Timer(1000); // Создаём таймер, который срабатывает каждую секунду
                         timer.Elapsed += TimerCheck;
-                        timeC = 3;
+                        timeC = 360;
                         timer.Start();
                     }
                     else
