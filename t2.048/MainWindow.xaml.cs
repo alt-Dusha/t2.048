@@ -1,7 +1,10 @@
-﻿using System.Windows;
+﻿using System.Printing;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
+
 
 namespace t2._048
 {
@@ -12,6 +15,10 @@ namespace t2._048
     {
         int lastInt;
 
+        static int Score;
+        static int cash_score;
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -20,15 +27,15 @@ namespace t2._048
             SecondButton.Content = RandomIndex();
             SecondButton.Background = GetColorForCard(int.Parse(SecondButton.Content.ToString()));
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (lastInt != 0)
             {
-                
+
             }
             else if (sender is Button button)
             {
+                cash_score = Convert.ToInt32(button.Content);
                 if (button.Name == "FirstButton")
                 {
                     lastInt = Convert.ToInt32(button.Content);
@@ -50,55 +57,71 @@ namespace t2._048
         {
             if (lastInt == 0)
             {
-
+                return;
             }
             else if (sender is StackPanel stackPanel)
             {
-                TextBlock t = new TextBlock
+                Border roundedBorder = new Border
                 {
+                    CornerRadius = new CornerRadius(5),
                     Background = GetColorForCard(lastInt),
-                    FontSize = 20,
                     Width = 57,
                     Height = 85,
+                };
+
+
+                TextBlock t = new TextBlock
+                {
+                    FontSize = 20,
                     Text = lastInt.ToString(),
                     TextAlignment = TextAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Foreground = Brushes.White
                 };
+
+                roundedBorder.Child = t;
+
+                // Сбрасываем lastInt и добавляем элемент
                 lastInt = 0;
+
                 foreach (var child in stackPanel.Children)
                 {
                     if (child is FrameworkElement element)
                     {
-                        //Нужно только для того что бы убрали большие текстбоксы и вместо них уже вставляли новое значение
+                        // Удаляем старые элементы, если они есть
                         if (element.Name == "h1" || element.Name == "h2" || element.Name == "h3" || element.Name == "h4")
                         {
                             stackPanel.Children.Clear();
                             break;
                         }
-                        else
-                        {
-                            break;
-                        }
                     }
                 }
-                stackPanel.Children.Add(t);
-                Minimized(stackPanel.Children.Count, stackPanel);
+
+                Score += cash_score;
+                score.Text = Score.ToString();
+                stackPanel.Children.Add(roundedBorder);
+
+                // Обновляем размеры элементов
+                Minimized(stackPanel.Children.Count, stackPanel, score.Text);
             }
         }
 
-        static void Minimized(int i, StackPanel stack)
+        static void Minimized(int count, StackPanel stack, string score)
         {
-            for (int j = 0; j < i; j++)
+            for (int i = 0; i < count; i++)
             {
-                if (stack.Children[j] is TextBlock element)
+                if (stack.Children[i] is Border border)
                 {
-                    if (j < i - 1)
+                    if (i < count - 1)
                     {
-                        element.Height = 31.25;
+                        border.Height = 31.25;
+                        border.CornerRadius = new CornerRadius(5, 5, 0, 0);
                     }
-                    else if (j == i - 1)
+                    else if (i == count - 1)
                     {
-                        element.Height = 85;
+                        border.Height = 85;
+
                     }
                 }
             }
@@ -108,27 +131,33 @@ namespace t2._048
         static void SumCards(StackPanel stackPanel)
         {
             if (stackPanel.Children.Count < 2) return;
-            else
+
+            while (stackPanel.Children.Count > 1) // Пока есть минимум два элемента
             {
-                while (stackPanel.Children.Count > 1) // Пока есть минимум два элемента
+                var lastChild = stackPanel.Children[stackPanel.Children.Count - 1] as Border;
+                var secondLastChild = stackPanel.Children[stackPanel.Children.Count - 2] as Border;
+
+                if (lastChild.Child is TextBlock lastTextBlock &&
+                    secondLastChild.Child is TextBlock secondLastTextBlock &&
+                    lastTextBlock.Text == secondLastTextBlock.Text)
                 {
-                    var lastChild = stackPanel.Children[stackPanel.Children.Count - 1] as TextBlock;
-                    var secondLastChild = stackPanel.Children[stackPanel.Children.Count - 2] as TextBlock;
-                    if (lastChild.Text == secondLastChild.Text)
-                    {
-                        secondLastChild.Height = 85;
-                        secondLastChild.Text = (int.Parse(secondLastChild.Text) * 2).ToString();
-                        secondLastChild.Background = GetColorForCard(int.Parse(secondLastChild.Text));
-                        stackPanel.Children.Remove(lastChild);
-                    }
-                    else
-                    {
-                        break; // Прерываем, если элементы не равны
-                    }
+                    // Удваиваем значение текста во втором последнем элементе
+                    secondLastTextBlock.Text = (int.Parse(secondLastTextBlock.Text) * 2).ToString();
+
+                    // Применяем новые параметры к второму последнему элементу
+                    secondLastChild.Background = GetColorForCard(int.Parse(secondLastTextBlock.Text));
+                    secondLastChild.Height = 85; // Устанавливаем высоту на 85 после слияния
+                    secondLastChild.CornerRadius = new CornerRadius(5);
+
+                    // Удаляем последний элемент
+                    stackPanel.Children.Remove(lastChild);
+                }
+                else
+                {
+                    break; // Прерываем, если элементы не равны
                 }
             }
         }
-
         //Полностью лаконичное и закоченное пространство, если и дорабатывать то в другой жизни
         static SolidColorBrush GetColorForCard(int i)
         {
@@ -154,7 +183,7 @@ namespace t2._048
             int[] integers = { 2, 4, 8, 16 };
             Random rnd = new Random();
             int t = rnd.Next(101);
-            if (t > 60) 
+            if (t > 60)
             {
                 return integers[0];
             }
@@ -171,5 +200,6 @@ namespace t2._048
                 return integers[3];
             }
         }
+
     }
 }
