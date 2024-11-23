@@ -16,7 +16,8 @@ namespace t2._048
         static int cash_score;
         Button b;
         System.Timers.Timer timer;
-        double timeC = 360; // Переменная для отслеживания времени
+        double timeC = 3; // Переменная для отслеживания времени
+        int health = 3;
         DoubleAnimation animka = new DoubleAnimation()
         {
             From = 0,  // Начальная позиция по оси X
@@ -225,6 +226,23 @@ namespace t2._048
                 if (timeC == 0)
                 {
                     timer.Stop(); // Останавливаем таймер
+                    if (health >  1)
+                    {
+                        health -= 1;
+                        Dispatcher.Invoke(() =>
+                        {
+                            stackHeart.Children.RemoveAt(health);
+                        });
+
+                        timer = new System.Timers.Timer(1000); // Создаём таймер, который срабатывает каждую секунду
+                        timer.Elapsed += TimerCheck;
+                        timeC = 3;
+                        timer.Start();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Вы проиграли");
+                    }
                 }
             }
         }
@@ -246,6 +264,11 @@ namespace t2._048
                 }
             }
             return new SolidColorBrush((Color)ColorConverter.ConvertFromString(colors[cash]));
+        }
+
+        private void faq_Click(object sender, RoutedEventArgs e)
+        {
+            faqPopup.IsOpen = true;
         }
 
         static int RandomIndex()

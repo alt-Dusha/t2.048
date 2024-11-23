@@ -107,6 +107,35 @@
                     <Button Grid.Column="1" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="23,10" Width="20" Height="20">
                         <Image Source="Resources/Faq.png"/>
                     </Button>
+                    <Popup x:Name="faqPopup" StaysOpen="False" Placement="Mouse">
+                        <Border Background="#AAFFFFFF" CornerRadius="10" Padding="10" BorderBrush="Gray" BorderThickness="1">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Resources/infoGame.jpg" Width="200" Height="400"/>
+                                <StackPanel Margin="10" Orientation="Vertical">
+                                    <TextBlock Text="Как играть?" FontWeight="Bold" FontSize="14"/>
+                                    <TextBlock Text="В данной игре, чтобы выйграть, вам предстоит собрать карту '2048' " TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="Для игры вам даются 2 активные карты" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="Выбрав 1 активную карту, вы имеете право указать активную колонку, чтобы поместить туда эту карту" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="После хода за место вашей активной карты появится новая" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="Карты выпадают случайным образом (2, 4, 8, 16)" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="2 одинаковые карты в колонне объединяются в 1, суммировав свои значения" FontWeight="Bold" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="Жизни, очки, таймер" FontWeight="Bold" FontSize="14"/>
+                                    <TextBlock Text="Вы потеряете 1 жихнь следующих случаях:" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="1. Вы набрали в колонну 10 карт" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="2. Закончился таймер" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="Если вы потеряли 3 жизни - вы проиграли" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="Призы" FontWeight="Bold" FontSize="14"/>
+                                    <TextBlock Text="" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="После победы или определённого кол-ва очков вы получаете приз (1 из 6 карт)" TextWrapping="Wrap" Margin="0,5,0,5"/>
+
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                    <Button Grid.Column="1" Name="faq" Click="faq_Click"  Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="23,10" Width="20" Height="20">
+                        <Image Source="Resources/Faq.png"/>
+                    </Button>
                 </Grid>
             </Grid>
         </Border>
