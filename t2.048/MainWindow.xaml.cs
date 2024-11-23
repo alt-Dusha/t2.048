@@ -9,14 +9,9 @@ using System.Windows.Threading;
 
 namespace t2._048
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        int lastInt;
-
-        static int Score;
+        int lastInt; static int Score;
         static int cash_score;
         Button b;
         DoubleAnimation animka = new DoubleAnimation()
