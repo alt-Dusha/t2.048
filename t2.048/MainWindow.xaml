@@ -34,6 +34,8 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
+                        <TextBlock Name="TimerXML" Grid.Column="2" Margin="0, -1, 9, 0" Foreground="White" Text="1"
+                                   HorizontalAlignment="Right"/>
                         <StackPanel Grid.Column="0" Name="stackHeart" Orientation="Horizontal">
                             <Image Source="Life/heart.png" Margin="9,2,2,2"/>
                             <Image Source="Life/heart.png" Margin="2"/>
@@ -44,20 +46,20 @@
                     <!--Поле для прогресса лиги, количества жизней, таймера-->
                 </Border>
                 <Grid Grid.Row="1" Margin="4,2,4,2" Background="#141414">
-                    <Image Source="Resources/Logo1.png" Grid.ColumnSpan="4"/>
-
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Border BorderThickness="1" Grid.ColumnSpan="4" BorderBrush="White" Margin="4,328,4,0"/>
+                    <Image Source="Resources/Logo1.png" Grid.ColumnSpan="4"/>
                     <!--4 ряда с картами-->
                     <Border Grid.Column="0" Width="55"  Height="85" BorderBrush="#3e383a" BorderThickness="2" CornerRadius="5" VerticalAlignment="Top"/>
                     <Border Grid.Column="1" Width="55" Height="85" BorderBrush="#3e383a" BorderThickness="2" CornerRadius="5" VerticalAlignment="Top"/>
                     <Border Grid.Column="2" Width="55" Height="85" BorderBrush="#3e383a" BorderThickness="2" CornerRadius="5" VerticalAlignment="Top"/>
                     <Border Grid.Column="3" Width="55" Height="85" BorderBrush="#3e383a" BorderThickness="2" CornerRadius="5" VerticalAlignment="Top"/>
+                    <Border BorderThickness="1" Grid.ColumnSpan="4" BorderBrush="White" Margin="4,328,4,0"/>
+
                     <StackPanel Name="stack1" MouseLeftButtonDown="stack1_MouseDown">
                         <TextBlock Height="85" Name="h1"/>
                     </StackPanel>

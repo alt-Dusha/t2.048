@@ -1,19 +1,22 @@
-﻿using System.Printing;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
-
+using System.Timers;
 
 namespace t2._048
 {
     public partial class MainWindow : Window
     {
-        int lastInt; static int Score;
+        int lastInt;
+        static int Score;
         static int cash_score;
         Button b;
+        System.Timers.Timer timer;
+        double timeC = 360; // Переменная для отслеживания времени
         DoubleAnimation animka = new DoubleAnimation()
         {
             From = 0,  // Начальная позиция по оси X
@@ -23,7 +26,6 @@ namespace t2._048
             EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut } // Тип easing
         };
 
-
         public MainWindow()
         {
             InitializeComponent();
@@ -31,19 +33,26 @@ namespace t2._048
             FirstButton.Background = GetColorForCard(int.Parse(FirstButton.Content.ToString()));
             SecondButton.Content = RandomIndex();
             SecondButton.Background = GetColorForCard(int.Parse(SecondButton.Content.ToString()));
+
+            timer = new System.Timers.Timer(1000); // Создаём таймер, который срабатывает каждую секунду
+            timer.Elapsed += TimerCheck;
+            timer.Start();
         }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (lastInt != 0)
             {
-
+                // Если lastInt != 0, можно добавить какую-то логику (например, обработку выбора карт)
             }
             else if (sender is Button button)
             {
                 b = button;
                 cash_score = Convert.ToInt32(button.Content);
+
                 if (button.Name == "FirstButton")
                 {
+                    // Анимация кнопки
                     DoubleAnimation moveUpAnimation = new DoubleAnimation
                     {
                         From = 0, // Начальная позиция
@@ -53,6 +62,7 @@ namespace t2._048
                         EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut } // Плавный эффект
                     };
                     ButtonTransform.BeginAnimation(TranslateTransform.YProperty, moveUpAnimation);
+
                     lastInt = Convert.ToInt32(button.Content);
                     button.Content = RandomIndex();
                     button.Background = GetColorForCard(int.Parse(button.Content.ToString()));
@@ -60,6 +70,7 @@ namespace t2._048
                 else
                 {
                     ButtonTransform.BeginAnimation(TranslateTransform.XProperty, animka);
+
                     DoubleAnimation moveUpAnimation = new DoubleAnimation()
                     {
                         From = 0, // Начальная позиция
@@ -69,6 +80,7 @@ namespace t2._048
                         EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
                     };
                     ButtonTransform1.BeginAnimation(TranslateTransform.YProperty, moveUpAnimation);
+
                     lastInt = Convert.ToInt32(button.Content);
                     button.Content = FirstButton.Content;
                     button.Background = GetColorForCard(int.Parse(button.Content.ToString()));
@@ -88,7 +100,7 @@ namespace t2._048
             {
                 if (stackPanel.Children.Count == 11)
                 {
-
+                    // Можно добавить какую-то логику
                 }
                 else
                 {
@@ -102,7 +114,6 @@ namespace t2._048
                         BorderThickness = new Thickness(1),
                     };
 
-
                     TextBlock t = new TextBlock
                     {
                         FontSize = 20,
@@ -115,7 +126,6 @@ namespace t2._048
 
                     roundedBorder.Child = t;
 
-                    // Сбрасываем lastInt и добавляем элемент
                     lastInt = 0;
 
                     foreach (var child in stackPanel.Children)
@@ -201,9 +211,25 @@ namespace t2._048
             }
         }
 
+        private void TimerCheck(object sender, ElapsedEventArgs e)
+        {
+            // Уменьшаем таймер с каждой секундой
+            if (timeC > 0)
+            {
+                timeC -= 1;
+                // Обновляем текст в главном UI потоке
+                Dispatcher.Invoke(() => {
+                    TimerXML.Text = timeC.ToString();
+                });
 
+                if (timeC == 0)
+                {
+                    timer.Stop(); // Останавливаем таймер
+                }
+            }
+        }
 
-        //Полностью лаконичное и закоченное пространство, если и дорабатывать то в другой жизни
+        // Полностью лаконичное и завершенное пространство, если и дорабатывать, то в другой жизни
         static SolidColorBrush GetColorForCard(int i)
         {
             int cash = 0;
@@ -222,7 +248,6 @@ namespace t2._048
             return new SolidColorBrush((Color)ColorConverter.ConvertFromString(colors[cash]));
         }
 
-        //Нечего дорабатывать, максимум - подкрут значений
         static int RandomIndex()
         {
             int[] integers = { 2, 4, 8, 16 };
