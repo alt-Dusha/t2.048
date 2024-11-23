@@ -18,6 +18,15 @@ namespace t2._048
 
         static int Score;
         static int cash_score;
+        Button b;
+        DoubleAnimation animka = new DoubleAnimation()
+        {
+            From = 0, // Начальная позиция
+            To = 20, // Перемещаем кнопку вправо на 20 пикселей
+            Duration = TimeSpan.FromSeconds(0.2), // Длительность анимации
+            AutoReverse = true, // Возврат кнопки в исходное положение
+            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+        };
 
 
         public MainWindow()
@@ -36,6 +45,7 @@ namespace t2._048
             }
             else if (sender is Button button)
             {
+                b = button;
                 cash_score = Convert.ToInt32(button.Content);
                 if (button.Name == "FirstButton")
                 {
@@ -80,49 +90,63 @@ namespace t2._048
             }
             else if (sender is StackPanel stackPanel)
             {
-                Border roundedBorder = new Border
+                if (stackPanel.Children.Count == 11)
                 {
-                    CornerRadius = new CornerRadius(5),
-                    Background = GetColorForCard(lastInt),
-                    Width = 57,
-                    Height = 85,
-                };
 
-
-                TextBlock t = new TextBlock
+                }
+                else
                 {
-                    FontSize = 20,
-                    Text = lastInt.ToString(),
-                    TextAlignment = TextAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    Foreground = Brushes.White
-                };
-
-                roundedBorder.Child = t;
-
-                // Сбрасываем lastInt и добавляем элемент
-                lastInt = 0;
-
-                foreach (var child in stackPanel.Children)
-                {
-                    if (child is FrameworkElement element)
+                    if (b.Name == "SecondButton")
                     {
-                        // Удаляем старые элементы, если они есть
-                        if (element.Name == "h1" || element.Name == "h2" || element.Name == "h3" || element.Name == "h4")
+                        ButtonTransform.BeginAnimation(TranslateTransform.YProperty, animka);
+                    }
+
+                    Border roundedBorder = new Border
+                    {
+                        CornerRadius = new CornerRadius(5),
+                        Background = GetColorForCard(lastInt),
+                        Width = 57,
+                        Height = 85,
+                        BorderBrush = new SolidColorBrush(Colors.Black),
+                        BorderThickness = new Thickness(1),
+                    };
+
+
+                    TextBlock t = new TextBlock
+                    {
+                        FontSize = 20,
+                        Text = lastInt.ToString(),
+                        TextAlignment = TextAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Foreground = Brushes.White,
+                    };
+
+                    roundedBorder.Child = t;
+
+                    // Сбрасываем lastInt и добавляем элемент
+                    lastInt = 0;
+
+                    foreach (var child in stackPanel.Children)
+                    {
+                        if (child is FrameworkElement element)
                         {
-                            stackPanel.Children.Clear();
-                            break;
+                            // Удаляем старые элементы, если они есть
+                            if (element.Name == "h1" || element.Name == "h2" || element.Name == "h3" || element.Name == "h4")
+                            {
+                                stackPanel.Children.Clear();
+                                break;
+                            }
                         }
                     }
+
+                    Score += cash_score;
+                    score.Text = Score.ToString();
+                    stackPanel.Children.Add(roundedBorder);
+
+                    // Обновляем размеры элементов
+                    Minimized(stackPanel.Children.Count, stackPanel, score.Text);
                 }
-
-                Score += cash_score;
-                score.Text = Score.ToString();
-                stackPanel.Children.Add(roundedBorder);
-
-                // Обновляем размеры элементов
-                Minimized(stackPanel.Children.Count, stackPanel, score.Text);
             }
         }
 
@@ -132,6 +156,15 @@ namespace t2._048
             {
                 if (stack.Children[i] is Border border)
                 {
+                    if (i == 0)
+                    {
+                        border.Margin = new Thickness(0);
+                    }
+                    else
+                    {
+                        border.Margin = new Thickness(0, -4, 0, 0);
+                    }
+
                     if (i < count - 1)
                     {
                         border.Height = 31.25;
@@ -140,7 +173,6 @@ namespace t2._048
                     else if (i == count - 1)
                     {
                         border.Height = 85;
-
                     }
                 }
             }
@@ -181,7 +213,7 @@ namespace t2._048
         static SolidColorBrush GetColorForCard(int i)
         {
             int cash = 0;
-            string[] colors = { "#6FEEB0", "#A3D88B", "#FF6B6B", "#FF3E5B", "#EAD2AC", "#9B59B6", "#B9FBC0", "#76E6D5", "#00A8E1", "#5C6BC0", "#F27D4C" };
+            string[] colors = { "#2350FC", "#91FC23", "#6C23FC", "#FCF023", "#6D4FA7", "#FC4623", "#00BFFF", "#FCC223", "#4F63A7", "#50727D", "#0000FF" };
             for (int j = 2; j != 2024; j *= 2)
             {
                 if (i == j)
