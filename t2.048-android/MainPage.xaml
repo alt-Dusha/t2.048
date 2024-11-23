@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="t2._048_android.MainPage">
+
+    <Grid ColumnDefinitions="*,Auto,*"
+          RowDefinitions="*,25*,*">
+
+        <Border Grid.Row="1" 
+                Grid.Column="1"
+                Stroke="#ff3495"
+                StrokeThickness="1">
+            <Grid RowDefinitions="48*,647*,195*">
+                
+                <Border Margin="4,4,4,2"
+                        BackgroundColor="#141414"
+                        Stroke="#00befd"
+                        StrokeThickness="1">
+                    <Grid ColumnDefinitions="*,*,*">
+                        <Label Grid.Column="1" 
+                               x:Name="score"
+                               TextColor="#00befd"
+                               FontSize="12"
+                               HorizontalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Row="1" 
+                      Margin="4,2,4,2"
+                      BackgroundColor="#141414"
+                      ColumnDefinitions="*,*,*,*">
+
+                    <Border Grid.Column="0"
+                            Stroke="#3e383a"
+                            StrokeThickness="1"
+                            Margin="2">
+                        <VerticalStackLayout x:Name="Column1Stack" Grid.Column="0" Spacing="10"/>
+                    </Border>
+
+                    <Border Grid.Column="1"
+                            Stroke="#3e383a"
+                            StrokeThickness="1"
+                            Margin="2">
+                        <VerticalStackLayout x:Name="Column2Stack" Grid.Column="1" Spacing="10"/>
+                    </Border>
+
+                    <Border Grid.Column="2"
+                            Stroke="#3e383a"
+                            StrokeThickness="1"
+                            Margin="2">
+                        <VerticalStackLayout x:Name="Column3Stack" Grid.Column="2" Spacing="10"/>
+                    </Border>
+
+                    <Border Grid.Column="3"
+                            Stroke="#3e383a"
+                            StrokeThickness="1"
+                            Margin="2">
+                        <VerticalStackLayout x:Name="Column4Stack" Grid.Column="3" Spacing="10"/>
+                    </Border>
+
+                </Grid>
+
+                <Grid Grid.Row="2" Margin="4,2,4,4" ColumnDefinitions="*,*">
+                    <Border Grid.Column="0"
+                            WidthRequest="62"
+                            Margin="62,0,10,0"
+                            HeightRequest="82"
+                            BackgroundColor="#3e383a"
+                            StrokeShape="RoundRectangle 5"
+                            VerticalOptions="Center">
+                    
+                        <Button Margin="2,4"
+                            WidthRequest="56"
+                            HeightRequest="76"
+                            TextColor="White"
+                            BorderWidth="0"
+                            Clicked="FirstButton_Clicked"
+                            x:Name="FirstButton"
+                            FontSize="20"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="StrokeShape" Value="RoundRectangle 8"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </Border>
+
+                    <Border Grid.Column="1"
+                            WidthRequest="62"
+                            Margin="11,0,62,0"
+                            HeightRequest="82"
+                            BackgroundColor="#3e383a"
+                            StrokeShape="RoundRectangle 5"
+                            VerticalOptions="Center">
+                        
+                        <Button Grid.Column="1"
+                            Margin="2,4"
+                            TextColor="White"
+                            BorderWidth="0"
+                            WidthRequest="56"
+                            HeightRequest="76"
+                            Clicked="SecondButton_Clicked"
+                            x:Name="SecondButton"
+                            FontSize="20"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="StrokeShape" Value="RoundRectangle 8"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>
