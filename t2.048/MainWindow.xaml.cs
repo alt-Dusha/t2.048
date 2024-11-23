@@ -21,11 +21,11 @@ namespace t2._048
         Button b;
         DoubleAnimation animka = new DoubleAnimation()
         {
-            From = 0, // Начальная позиция
-            To = 20, // Перемещаем кнопку вправо на 20 пикселей
-            Duration = TimeSpan.FromSeconds(0.2), // Длительность анимации
-            AutoReverse = true, // Возврат кнопки в исходное положение
-            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+            From = 0,  // Начальная позиция по оси X
+            To = 20,   // Перемещаем элемент вправо на 20 пикселей
+            Duration = TimeSpan.FromSeconds(0.2),
+            AutoReverse = true, // Возврат в исходное положение
+            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut } // Тип easing
         };
 
 
@@ -64,6 +64,7 @@ namespace t2._048
                 }
                 else
                 {
+                    ButtonTransform.BeginAnimation(TranslateTransform.XProperty, animka);
                     DoubleAnimation moveUpAnimation = new DoubleAnimation()
                     {
                         From = 0, // Начальная позиция
@@ -96,11 +97,6 @@ namespace t2._048
                 }
                 else
                 {
-                    if (b.Name == "SecondButton")
-                    {
-                        ButtonTransform.BeginAnimation(TranslateTransform.YProperty, animka);
-                    }
-
                     Border roundedBorder = new Border
                     {
                         CornerRadius = new CornerRadius(5),
