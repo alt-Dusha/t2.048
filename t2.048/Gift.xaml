@@ -4,8 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:t2._048"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="300">
+       mc:Ignorable="d"
+WindowStyle="None"
+Background="#141414"
+        WindowStartupLocation="CenterScreen"
+Title="t2.048" Width="300" Height="500" ResizeMode="NoResize">
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -18,7 +21,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Image Source="C:\Users\frien\source\repos\Карточки\Карточки\res\Draw a white12 man 50.png" Grid.ColumnSpan="3" Margin="-120,-43,-53,54" Grid.RowSpan="3"/>
+        <Image Source="res\Draw a white12 man 50.png" Grid.ColumnSpan="3" Margin="-120,-43,-53,54" Grid.RowSpan="3"/>
         <Rectangle Fill="Gray" Opacity="0.7" Grid.ColumnSpan="3" Margin="10,160,10,10" Grid.RowSpan="2" Grid.Row="1" RadiusX="20" RadiusY="20" />
         <Button Background="Transparent" BorderBrush="Transparent" Grid.Column="0" Grid.Row="1" Height="91" Width="60"  Click="Button_Click" Margin="0,165,0,0">
             <Image Source="\res\Group 12.png"/>

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:t2._048"
         mc:Ignorable="d"
         WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
         Background="#141414"
         Title="t2.048" Width="300" Height="500" ResizeMode="NoResize">
     <Grid>
