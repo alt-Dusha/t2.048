@@ -44,6 +44,8 @@
                     <!--Поле для прогресса лиги, количества жизней, таймера-->
                 </Border>
                 <Grid Grid.Row="1" Margin="4,2,4,2" Background="#141414">
+                    <Image Source="Resources/Logo1.png" Grid.ColumnSpan="4"/>
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -99,6 +101,9 @@
                         <Button.RenderTransform>
                             <TranslateTransform x:Name="ButtonTransform1" />
                         </Button.RenderTransform>
+                    </Button>
+                    <Button Grid.Column="1" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="23,10" Width="20" Height="20">
+                        <Image Source="Resources/Faq.png"/>
                     </Button>
                 </Grid>
             </Grid>
