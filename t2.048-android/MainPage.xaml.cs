@@ -33,8 +33,9 @@ namespace t2._048_android
 
             foreach (var column in columns)
             {
-                tapGesture.Tapped += ColumnTapped;
-                column.GestureRecognizers.Add(tapGesture);
+                var collumTapGesture = new TapGestureRecognizer();
+                collumTapGesture.Tapped += ColumnTapped;
+                column.GestureRecognizers.Add(collumTapGesture);
             }
 
             UpdateInitialButtons();
