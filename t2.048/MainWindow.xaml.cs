@@ -133,7 +133,7 @@ namespace t2._048
         static SolidColorBrush GetColorForCard(int i)
         {
             int cash = 0;
-            string[] colors = { "#0084ab", "#1c4693", "#2d318d", "#5e2c8a", "#872c8b", "#ac2c89", "#cc2c79", "#db324f", "#e86334", "#f3a630", "#f2d73c" };
+            string[] colors = { "#6FEEB0", "#A3D88B", "#FF6B6B", "#FF3E5B", "#EAD2AC", "#9B59B6", "#B9FBC0", "#76E6D5", "#00A8E1", "#5C6BC0", "#F27D4C" };
             for (int j = 2; j != 2024; j *= 2)
             {
                 if (i == j)
