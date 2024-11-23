@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Threading;
 
 namespace t2._048
 {
@@ -17,7 +16,9 @@ namespace t2._048
         {
             InitializeComponent();
             FirstButton.Content = RandomIndex();
+            FirstButton.Background = GetColorForCard(int.Parse(FirstButton.Content.ToString()));
             SecondButton.Content = RandomIndex();
+            SecondButton.Background = GetColorForCard(int.Parse(SecondButton.Content.ToString()));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -32,12 +33,15 @@ namespace t2._048
                 {
                     lastInt = Convert.ToInt32(button.Content);
                     button.Content = RandomIndex();
+                    button.Background = GetColorForCard(int.Parse(button.Content.ToString()));
                 }
                 else
                 {
                     lastInt = Convert.ToInt32(button.Content);
                     button.Content = FirstButton.Content;
+                    button.Background = GetColorForCard(int.Parse(button.Content.ToString()));
                     FirstButton.Content = RandomIndex();
+                    FirstButton.Background = GetColorForCard(int.Parse(FirstButton.Content.ToString()));
                 }
             }
         }
@@ -108,15 +112,14 @@ namespace t2._048
             {
                 while (stackPanel.Children.Count > 1) // Пока есть минимум два элемента
                 {
-                    Thread.Sleep(150);
                     var lastChild = stackPanel.Children[stackPanel.Children.Count - 1] as TextBlock;
                     var secondLastChild = stackPanel.Children[stackPanel.Children.Count - 2] as TextBlock;
-
                     if (lastChild.Text == secondLastChild.Text)
                     {
+                        secondLastChild.Height = 85;
                         secondLastChild.Text = (int.Parse(secondLastChild.Text) * 2).ToString();
+                        secondLastChild.Background = GetColorForCard(int.Parse(secondLastChild.Text));
                         stackPanel.Children.Remove(lastChild);
-
                     }
                     else
                     {
@@ -127,25 +130,22 @@ namespace t2._048
         }
 
         //Полностью лаконичное и закоченное пространство, если и дорабатывать то в другой жизни
-        private SolidColorBrush GetColorForCard(int lastInt)
+        static SolidColorBrush GetColorForCard(int i)
         {
-            if (lastInt == 2)
+            int cash = 0;
+            string[] colors = { "#0084ab", "#1c4693", "#2d318d", "#5e2c8a", "#872c8b", "#ac2c89", "#cc2c79", "#db324f", "#e86334", "#f3a630", "#f2d73c" };
+            for (int j = 2; j != 2024; j *= 2)
             {
-                return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0084ab"));
+                if (i == j)
+                {
+                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString(colors[cash]));
+                }
+                else
+                {
+                    cash++;
+                }
             }
-            else if (lastInt == 4)
-            {
-                return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1c4693"));
-            }
-            else if (lastInt == 8)
-            {
-                return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2d318d"));
-            }
-            //if (lastInt == 16)
-            else 
-            {
-                return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#5e2c8a"));
-            }
+            return new SolidColorBrush((Color)ColorConverter.ConvertFromString(colors[cash]));
         }
 
         //Нечего дорабатывать, максимум - подкрут значений

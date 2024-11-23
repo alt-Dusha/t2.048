@@ -24,11 +24,18 @@
                     <RowDefinition Height="647*"/>
                     <RowDefinition Height="214*"/>
                 </Grid.RowDefinitions>
-                <Border Margin="8,8,8,4" Background="DarkGray"
+                <Border Margin="4,4,4,2" Background="DarkGray"
                         BorderBrush="Black" BorderThickness="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
                     <!--Поле для прогресса лиги, количества жизней, таймера-->
                 </Border>
-                <Grid Grid.Row="1" Margin="8,4,8,4" Background="DarkGray">
+                <Grid Grid.Row="1" Margin="4,2,4,2" Background="DarkGray">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -49,7 +56,7 @@
                         <TextBlock Height="310" Name="h4"/>
                     </StackPanel>
                 </Grid>
-                <Grid Grid.Row="3" Margin="8,4,8,8" Background="DarkGray">
+                <Grid Grid.Row="3" Margin="4,2,4,4" Background="DarkGray">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition/>
@@ -64,8 +71,11 @@
                         <Border Background="#FFDDDDDD" Margin="52, 4, 2, 4" BorderBrush="Black" BorderThickness="1"/>
                         <Border Background="#FFDDDDDD" Margin="64, 4, 2, 4" BorderBrush="Black" BorderThickness="1"/>
                     </Grid>
-                    <Button Grid.Column="1" Margin="2,4,2,4" Click="Button_Click" Name="FirstButton" FontSize="20"/>
-                    <Button Grid.Column="2" Margin="2,4,4,4" Click="Button_Click" Name="SecondButton" FontSize="20"/>
+                    <Button Grid.Column="1" Margin="2,4,2,4" Click="Button_Click" Name="FirstButton" FontSize="20"
+                            VerticalContentAlignment="Top"
+                            />
+                    <Button Grid.Column="2" Margin="2,4,4,4" Click="Button_Click" Name="SecondButton" FontSize="20"
+                            VerticalContentAlignment="Top"/>
                 </Grid>
             </Grid>
         </Border>
