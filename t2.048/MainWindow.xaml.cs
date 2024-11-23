@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
 
@@ -38,12 +39,30 @@ namespace t2._048
                 cash_score = Convert.ToInt32(button.Content);
                 if (button.Name == "FirstButton")
                 {
+                    DoubleAnimation moveUpAnimation = new DoubleAnimation
+                    {
+                        From = 0, // Начальная позиция
+                        To = -20, // Поднимаем кнопку вверх на 20 пикселей
+                        Duration = TimeSpan.FromSeconds(0.2), // Длительность анимации
+                        AutoReverse = true, // Возврат кнопки в исходное положение
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut } // Плавный эффект
+                    };
+                    ButtonTransform.BeginAnimation(TranslateTransform.YProperty, moveUpAnimation);
                     lastInt = Convert.ToInt32(button.Content);
                     button.Content = RandomIndex();
                     button.Background = GetColorForCard(int.Parse(button.Content.ToString()));
                 }
                 else
                 {
+                    DoubleAnimation moveUpAnimation = new DoubleAnimation()
+                    {
+                        From = 0, // Начальная позиция
+                        To = -20, // Поднимаем кнопку вверх на 20 пикселей
+                        Duration = TimeSpan.FromSeconds(0.2), // Длительность анимации
+                        AutoReverse = true, // Возврат кнопки в исходное положение
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+                    };
+                    ButtonTransform1.BeginAnimation(TranslateTransform.YProperty, moveUpAnimation);
                     lastInt = Convert.ToInt32(button.Content);
                     button.Content = FirstButton.Content;
                     button.Background = GetColorForCard(int.Parse(button.Content.ToString()));

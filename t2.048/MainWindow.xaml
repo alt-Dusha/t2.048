@@ -78,6 +78,9 @@
                                 <Setter Property="CornerRadius" Value="8"/>
                             </Style>
                         </Button.Resources>
+                        <Button.RenderTransform>
+                            <TranslateTransform x:Name="ButtonTransform" />
+                        </Button.RenderTransform>
                     </Button>
                     <Border Grid.Column="1" Width="55" Margin="15,10,58,0" Height="82" Background="#303030" CornerRadius="5" VerticalAlignment="Top"/>
                     <Border Grid.Column="1" Width="55" Margin="11,0,62,0" Height="82" Background="#3e383a" CornerRadius="5" VerticalAlignment="Center"/>
@@ -89,6 +92,9 @@
                                 <Setter Property="CornerRadius" Value="8"/>
                             </Style>
                         </Button.Resources>
+                        <Button.RenderTransform>
+                            <TranslateTransform x:Name="ButtonTransform1" />
+                        </Button.RenderTransform>
                     </Button>
                 </Grid>
             </Grid>
