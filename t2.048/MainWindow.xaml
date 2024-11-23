@@ -34,6 +34,11 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Name="stackHeart" Orientation="Horizontal">
+                            <Image Source="Life/heart.png" Margin="9,2,2,2"/>
+                            <Image Source="Life/heart.png" Margin="2"/>
+                            <Image Source="Life/heart.png" Margin="2"/>
+                        </StackPanel>
                         <TextBlock Grid.Column="1" x:Name="score" Foreground="#00befd" FontSize="12" HorizontalAlignment="Center"/>
                     </Grid>
                     <!--Поле для прогресса лиги, количества жизней, таймера-->
