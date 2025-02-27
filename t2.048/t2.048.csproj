@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>t2._048</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Life\heart.png" />
+    <None Remove="Resources\Faq.png" />
+    <None Remove="Resources\infoGame.jpg" />
+    <None Remove="Resources\Logo1.png" />
+    <None Remove="res\Draw a white man 50.png" />
+    <None Remove="res\Draw a white12 man 50.png" />
+    <None Remove="res\Group 12.png" />
+    <None Remove="res\Group 13.png" />
+    <None Remove="res\Group 14.png" />
+    <None Remove="res\Group 15.png" />
+    <None Remove="res\Group 16.png" />
+    <None Remove="res\Group 17.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="res\Draw a white man 50.png" />
+    <Resource Include="res\Draw a white12 man 50.png" />
+    <Resource Include="res\Group 12.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Life\heart.png" />
+    <Resource Include="Resources\Faq.png" />
+    <Resource Include="Resources\infoGame.jpg" />
+    <Resource Include="Resources\Logo1.png" />
+    <Resource Include="res\Group 13.png" />
+    <Resource Include="res\Group 14.png" />
+    <Resource Include="res\Group 15.png" />
+    <Resource Include="res\Group 16.png" />
+    <Resource Include="res\Group 17.png" />
+  </ItemGroup>
+
+</Project>

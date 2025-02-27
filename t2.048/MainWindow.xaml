@@ -1,0 +1,144 @@
+﻿<Window x:Class="t2._048.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:t2._048"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Background="#141414"
+        Title="t2.048" Width="300" Height="500" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="25*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="1" Grid.Column="1" BorderBrush="#ff3495" BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="48*"/>
+                    <RowDefinition Height="647*"/>
+                    <RowDefinition Height="195*"/>
+                </Grid.RowDefinitions>
+                <Border Margin="4,4,4,2" Background="#141414"
+                        BorderBrush="#00befd" BorderThickness="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Name="TimerXML" Grid.Column="2" Margin="0, -1, 9, 0" Foreground="White" Text="1"
+                                   HorizontalAlignment="Right"/>
+                        <StackPanel Grid.Column="0" Name="stackHeart" Orientation="Horizontal">
+                            <Image Source="Life/heart.png" Margin="9,2,2,2"/>
+                            <Image Source="Life/heart.png" Margin="2"/>
+                            <Image Source="Life/heart.png" Margin="2"/>
+                        </StackPanel>
+                        <TextBlock Grid.Column="1" x:Name="score" Foreground="#00befd" FontSize="12" HorizontalAlignment="Center"/>
+                    </Grid>
+                    <!--Поле для прогресса лиги, количества жизней, таймера-->
+                </Border>
+                <Grid Grid.Row="1" Margin="4,2,4,2" Background="#141414">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="Resources/Logo1.png" Grid.ColumnSpan="4"/>
+                    <!--4 ряда с картами-->
+                    <Border Grid.Column="0" Width="55"  Height="85" BorderBrush="#3e383a" BorderThickness="2" CornerRadius="5" VerticalAlignment="Top"/>
+                    <Border Grid.Column="1" Width="55" Height="85" BorderBrush="#3e383a" BorderThickness="2" CornerRadius="5" VerticalAlignment="Top"/>
+                    <Border Grid.Column="2" Width="55" Height="85" BorderBrush="#3e383a" BorderThickness="2" CornerRadius="5" VerticalAlignment="Top"/>
+                    <Border Grid.Column="3" Width="55" Height="85" BorderBrush="#3e383a" BorderThickness="2" CornerRadius="5" VerticalAlignment="Top"/>
+                    <Border BorderThickness="1" Grid.ColumnSpan="4" BorderBrush="White" Margin="4,328,4,0"/>
+
+                    <StackPanel Name="stack1" MouseLeftButtonDown="stack1_MouseDown">
+                        <TextBlock Height="85" Name="h1"/>
+                    </StackPanel>
+                    <StackPanel Name="stack2" Grid.Column="1" MouseLeftButtonDown="stack1_MouseDown">
+                        <TextBlock Height="85" Name="h2"/>
+                    </StackPanel>
+                    <StackPanel Name="stack3" Grid.Column="2" MouseLeftButtonDown="stack1_MouseDown">
+                        <TextBlock Height="85" Name="h3"/>
+                    </StackPanel>
+                    <StackPanel Name="stack4" Grid.Column="3" MouseLeftButtonDown="stack1_MouseDown">
+                        <TextBlock Height="85" Name="h4"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="3" Margin="4,2,4,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" Width="55" Margin="57,10,15,0" Height="82" Background="#303030" CornerRadius="5" VerticalAlignment="Top"/>
+                    <Border Grid.Column="0" Width="55" Margin="62,0,10,0" Height="82" Background="#3e383a" CornerRadius="5" VerticalAlignment="Center"/>
+                    <Button Margin="2,4" Width="54" Foreground="White" BorderThickness="0" Click="Button_Click" Name="FirstButton" FontSize="20"
+                            HorizontalAlignment="Right"
+                            VerticalContentAlignment="Center">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="8"/>
+                            </Style>
+                        </Button.Resources>
+                        <Button.RenderTransform>
+                            <TranslateTransform x:Name="ButtonTransform"/>
+                        </Button.RenderTransform>
+                    </Button>
+                    <Button Grid.Column="1" Margin="2,4" Foreground="White" BorderThickness="0" Width="56" Click="Button_Click" Name="SecondButton" FontSize="20"
+                            HorizontalAlignment="Left"
+                            VerticalContentAlignment="Center">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="8"/>
+                            </Style>
+                        </Button.Resources>
+                        <Button.RenderTransform>
+                            <TranslateTransform x:Name="ButtonTransform1" />
+                        </Button.RenderTransform>
+                    </Button>
+                    <Button Grid.Column="1" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="23,10" Width="20" Height="20">
+                        <Image Source="Resources/Faq.png"/>
+                    </Button>
+                    <Popup x:Name="faqPopup" StaysOpen="False" Placement="Mouse">
+                        <Border Background="#AAFFFFFF" CornerRadius="10" Padding="10" BorderBrush="Gray" BorderThickness="1">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Resources/infoGame.jpg" Width="200" Height="400"/>
+                                <StackPanel Margin="10" Orientation="Vertical">
+                                    <TextBlock Text="Как играть?" FontWeight="Bold" FontSize="14"/>
+                                    <TextBlock Text="В данной игре, чтобы выйграть, вам предстоит собрать карту '2048' " TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="Для игры вам даются 2 активные карты" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="Выбрав 1 активную карту, вы имеете право указать активную колонку, чтобы поместить туда эту карту" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="После хода за место вашей активной карты появится новая" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="Карты выпадают случайным образом (2, 4, 8, 16)" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="2 одинаковые карты в колонне объединяются в 1, суммировав свои значения" FontWeight="Bold" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="Жизни, очки, таймер" FontWeight="Bold" FontSize="14"/>
+                                    <TextBlock Text="Вы потеряете 1 жихнь следующих случаях:" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="1. Вы набрали в колонну 10 карт" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="2. Закончился таймер" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="Если вы потеряли 3 жизни - вы проиграли" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="Призы" FontWeight="Bold" FontSize="14"/>
+                                    <TextBlock Text="" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                    <TextBlock Text="После победы или определённого кол-ва очков вы получаете приз (1 из 6 карт)" TextWrapping="Wrap" Margin="0,5,0,5"/>
+
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                    <Button Grid.Column="1" Name="faq" Click="faq_Click"  Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="23,10" Width="20" Height="20">
+                        <Image Source="Resources/Faq.png"/>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
